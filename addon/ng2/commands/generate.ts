@@ -5,6 +5,7 @@ import * as SilentError from 'silent-error';
 var chalk = require('chalk');
 import * as Blueprint from 'ember-cli/lib/models/blueprint';
 var EOL = require('os').EOL;
+var config = require(path.join(__dirname, '..', '..', '..', '..', '..', 'angular-cli.json'));
 
 const GenerateCommand = EmberGenerateCommand.extend({
   name: 'generate',
@@ -18,6 +19,7 @@ const GenerateCommand = EmberGenerateCommand.extend({
     rawArgs[0] = mapBlueprintName(rawArgs[0]);
 
     if (rawArgs[0] !== '--help' &&
+      !fs.existsSync(path.join(__dirname, '..', '..', '..', '..', '..', config.blueprints, rawArgs[0])) &&
       !fs.existsSync(path.join(__dirname, '..', 'blueprints', rawArgs[0]))) {
       SilentError.debugOrThrow('angular-cli/commands/generate', `Invalid blueprint: ${rawArgs[0]}`);
     }
